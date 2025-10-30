@@ -44,7 +44,12 @@ const Admin = () => {
       status: formData.get('status') as 'active' | 'completed' | 'upcoming',
       organizer: formData.get('organizer') as string,
       requirements: (formData.get('requirements') as string).split(',').map(r => r.trim()),
+      requiredSkills: (formData.get('requiredSkills') as string).split(',').map(s => s.trim()),
       image: formData.get('image') as string || 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800',
+      hours: parseInt(formData.get('hours') as string) || 3,
+      rating: 0,
+      reviews: 0,
+      difficulty: (formData.get('difficulty') as 'beginner' | 'intermediate' | 'advanced') || 'beginner',
     });
     setAllProjects(projects.getAll());
     setIsDialogOpen(false);
@@ -134,6 +139,29 @@ const Admin = () => {
                 <div className="space-y-2">
                   <Label htmlFor="requirements">Requirements (comma separated)</Label>
                   <Input id="requirements" name="requirements" placeholder="e.g., Physical fitness, Team player" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="requiredSkills">Required Skills (comma separated)</Label>
+                  <Input id="requiredSkills" name="requiredSkills" placeholder="e.g., Gardening, Teaching" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="hours">Volunteer Hours</Label>
+                    <Input id="hours" name="hours" type="number" defaultValue="3" required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="difficulty">Difficulty</Label>
+                    <Select name="difficulty" defaultValue="beginner">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="beginner">Beginner</SelectItem>
+                        <SelectItem value="intermediate">Intermediate</SelectItem>
+                        <SelectItem value="advanced">Advanced</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="image">Image URL</Label>
